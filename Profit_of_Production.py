@@ -119,7 +119,7 @@ def theatre():
         fullhouse(prod_cost, bandA, bandB, bandC, drinkws, programws)
 
     else:
-        randomhouse(prod_cost, bandA, bandB, bandC)
+        randomhouseaverage(prod_cost, bandA, bandB, bandC)
 
     main()
 
@@ -176,8 +176,8 @@ def fullhouse(prod_cost, bandA, bandB, bandC, drinkws, programws):
     main()
 
 
-# Random House Function
-def randomhouse(prod_cost, bandA, bandB, bandC):
+# Random House Average Function
+def randomhouseaverage(prod_cost, bandA, bandB, bandC):
 
     prof_banda = 0
     prof_bandb = 0
@@ -212,13 +212,52 @@ def randomhouse(prod_cost, bandA, bandB, bandC):
 
     # Overall price of seats for the night
     average_band = (float(prof_banda + prof_bandb + prof_bandc)) / 5
-    print(f"The average profit over five nights is = £{average_band}")
+    print(f"\nThe average profit over five nights is = £{average_band}")
 
     # Days until a profit is made
     days_profit = math.ceil(float(prod_cost / average_band))
     print(f"With production costing £{prod_cost} it will take {days_profit} days to make a profit.")
 
+    randomhousesingle(prod_cost,bandA,bandB,bandC)
+
     main()
+
+
+# Random House Single Function
+def randomhousesingle(prod_cost, bandA, bandB, bandC):
+
+    # Create 5 by 5 list
+    numc = 5
+    numr = 5
+
+    seats = [[0 for row in range(numr)] for col in range(numc)]
+
+    # Populate the list with 10 - 25 "1" in randomly selected positions
+    for pos in random.sample(range(25), random.randint(10, 25)):
+        seats[pos // 5][pos % 5] = 1
+
+    # Test print
+    print()
+    print("-- Single Random Night --")
+    for i in range(numr):
+        print(seats[i])
+
+    # Money made per each band and consumables
+    prof_banda = float((seats[0].count(1) + (seats[1].count(1))) * bandA)
+    prof_bandb = float((seats[3].count(1) + (seats[3].count(1))) * bandB)
+    prof_bandc = float((seats[4].count(1)) * bandC)
+
+    print("\n- Seat Sales Alone - ")
+    # Overall price of seats for the night
+    overall_band = float(prof_banda + prof_bandb + prof_bandc)
+    print(f"The total for seat sales is = £{overall_band}")
+    print(f"- Band A = £{prof_banda}")
+    print(f"- Band B = £{prof_bandb}")
+    print(f"- Band C = £{prof_bandc}")
+
+    # Days until a profit is made
+    days_profit = math.ceil(float(prod_cost / overall_band))
+    print(f"\nWith production costing £{prod_cost} it will take {days_profit} days to make a profit.")
 
 
 # Extended Function
